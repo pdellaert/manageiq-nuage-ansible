@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+
+#
+# Configure to match your environment
+#
+  vars:
+    nuage_auth:
+      api_username: "{{ nuage_username }}"
+      api_password: "{{ nuage_password }}"
+      api_enterprise: "{{ nuage_enterprise }}"
+      api_url: "{{ nuage_url }}"
+      api_version: "{{ nuage_version }}"
+
+  tasks: 
+    - name: Create Enterprise
+      connection: local
+      nuage_vspk:
+        auth: "{{ nuage_auth }}"
+        type: Enterprise
+        state: present
+        properties:
+          name: "{{ enterprise_name }}"
+          description: "Created by Ansible through ManageIQ"
+
+    - name: Debug Nuage auth
+      debug:
+        var: nuage_auth
